@@ -1,20 +1,34 @@
 import React, { useState } from "react";
-import { Outlet } from "react-router-dom";
+import { Outlet, useNavigate } from "react-router-dom";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+import GroupButtons from "../small_components/buttons";
+import AutoComplete from "../autoComplete/autoComplete";
+import { getAutoCompleteApi } from "../../mock/mock";
 
 const Layout = () => {
   const [query, setQuery] = useState("");
   const [weather, setWeather] = useState({});
 
+  const notify = () => toast("Wow so easy!");
+
+  const navigate = useNavigate();
+
+  const handleClick = (event) => {
+    console.log(event);
+    navigate(`/${event.target.value}`);
+  };
+
   const weatherApi = {
     baseKey: "7j7jodfnbvOacTr6XdFeOJ7XmqQhTSMg",
     autoCompleteKey:
-      "http://dataservice.accuweather.com/locations/v1/cities/autocomplete",
+      "https://dataservice.accuweather.com/locations/v1/cities/autocomplete",
     currentWeatherKey:
-      "http://dataservice.accuweather.com/currentconditions/v1/",
+      "https://dataservice.accuweather.com/currentconditions/v1/",
   };
 
   const getWeatherDetails = async (city) => {
-    setQuery(`${city}?apiKey=${weatherApi.baseKey}`);
+    setQuery(`${city}?apikey=${weatherApi.baseKey}`);
 
     const res = await fetch(weatherApi.currentWeatherKey + query);
     const data = await res.json();
@@ -23,17 +37,25 @@ const Layout = () => {
   };
 
   const getWeatherAutoComplete = async (locationPartialName) => {
-    setQuery(`apiKey=${weatherApi.baseKey}&q=${locationPartialName}`);
+    setQuery(`?apikey=${weatherApi.baseKey}&q=${locationPartialName}`);
 
-    console.log(query);
+    console.log(`query:${query}`);
 
-    const res = await fetch(weatherApi.autoCompleteKey + query);
-    const data = await res.json();
+    try {
+      console.log(weatherApi.autoCompleteKey + query);
+      //const res = await fetch(weatherApi.autoCompleteKey + query);
 
-    return data[0];
+      // const data = await res.json();
+      const data = getAutoCompleteApi();
+      return data;
+    } catch (err) {
+      toast.error({ id: "error" }, "auto complete failed");
+    }
   };
 
   const handleChange = async (event) => {
+    // notify(event)
+    // <ToastContainer/>
     console.log(event.target.value);
     let options = await getWeatherAutoComplete(event.target.value);
     //let currentWeather = getWeatherDetails(event.target.value);
@@ -80,7 +102,11 @@ const Layout = () => {
 
   return (
     <div className="app">
-      <h1>Dashboard</h1>
+      <div className="dashboard">
+        <h1>Dashboard</h1>
+        <AutoComplete />
+        <GroupButtons onClick={(e) => handleClick(e)}></GroupButtons>
+      </div>
       <main>
         <div className="search-box">
           <input
@@ -99,6 +125,8 @@ const Layout = () => {
           <div className="temperature">15°c</div>
           <div className="weather">Sunny</div>
         </div>
+        <button onClick={notify}>Notify!</button>
+        <ToastContainer />
         <Outlet />
       </main>
     </div>

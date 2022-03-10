@@ -3,14 +3,14 @@ import { Outlet, useNavigate } from "react-router-dom";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import GroupButtons from "../small_components/buttons";
-import AutoComplete from "../autoComplete/autoComplete";
+import DropDown from "../small_components/dropDown";
 import { getAutoCompleteApi } from "../../mock/mock";
 
 const Layout = () => {
   const [query, setQuery] = useState("");
   const [weather, setWeather] = useState({});
 
-  const notify = () => toast("Wow so easy!");
+  // const notify = () => toast("Wow so easy!");
 
   const navigate = useNavigate();
 
@@ -104,7 +104,7 @@ const Layout = () => {
     <div className="app">
       <div className="dashboard">
         <h1>Dashboard</h1>
-        <AutoComplete />
+        <DropDown />
         <GroupButtons onClick={(e) => handleClick(e)}></GroupButtons>
       </div>
       <main>
@@ -125,7 +125,7 @@ const Layout = () => {
           <div className="temperature">15°c</div>
           <div className="weather">Sunny</div>
         </div>
-        <button onClick={notify}>Notify!</button>
+        {/* <button onClick={notify}>Notify!</button> */}
         <ToastContainer />
         <Outlet />
       </main>

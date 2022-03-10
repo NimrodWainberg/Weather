@@ -101,3 +101,16 @@ main {
   font-weight: 700;
   text-shadow: 3px 3px rgba(50, 50, 70, 0.5);
 }
+
+.dashboard {
+  margin-left: 20px;
+  color: #fff;
+  font-size: 20px;
+  font-weight: 700;
+  text-shadow: 3px 3px rgba(50, 50, 70, 0.5);
+  width: 100%;
+  padding: 15px;
+  display: flex;
+  justify-content: space-between;
+}
+

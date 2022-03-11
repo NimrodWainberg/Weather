@@ -8,6 +8,7 @@ const weatherRducer = (
       return {
         ...state,
         currentWeatherData: {
+          ...state.currentWeatherData,
           weatherText: action.payload.WeatherText,
           temperature: action.payload.Temperature.Metric.Value,
         },

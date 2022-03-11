@@ -1,18 +1,36 @@
 import * as React from "react";
+import { useState } from "react";
 import Button from "@mui/material/Button";
 import ButtonGroup from "@mui/material/ButtonGroup";
+import IconButton from "@mui/material/IconButton";
+import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
+import FavoriteIcon from "@mui/icons-material/Favorite";
 
-const GroupBottons = ({ onClick }) => {
+export const GroupButtons = ({ onClick }) => {
   return (
     <ButtonGroup variant="contained" aria-label="outlined primary button group">
-      <Button name="Home" onClick={onClick}>
+      <Button label="Home" onClick={onClick}>
         Home
       </Button>
-      <Button name="Favorites" onClick={onClick}>
+      <Button label="Favorites" onClick={onClick}>
         Favorites
       </Button>
     </ButtonGroup>
   );
 };
 
-export default GroupBottons;
+export const FavoriteButton = ({ onClick }) => {
+  const [likeButton, setLikeButton] = useState(false);
+  const handleFavorite = () => {
+    setLikeButton(!likeButton);
+  };
+
+  return (
+    <IconButton
+      color="error"
+      aria-label="add to favorite"
+      onClick={handleFavorite}>
+      {likeButton ? <FavoriteIcon /> : <FavoriteBorderIcon />}
+    </IconButton>
+  );
+};

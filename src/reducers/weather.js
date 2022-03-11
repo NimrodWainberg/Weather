@@ -15,15 +15,25 @@ const weatherRducer = (
     }
 
     case "SET_CURRENT_WEATHER_NAME": {
-      // return {
-      //   ...state,
-      //   currentWeatherData: {
-      //     cityName: action.payload,
-      //   },
-      // };
       return {
         ...state,
-        cityName: action.payload,
+        currentWeatherData: {
+          ...state.currentWeatherData,
+          cityName: action.payload,
+        },
+      };
+    }
+
+    case "ADD_FAVORITE": {
+      return { ...state, favorites: [...state.favorites, action.payload] };
+    }
+
+    case "REMOVE_FAVORITE": {
+      return {
+        ...state,
+        favorites: state.favorites.filter(
+          (element) => element.cityName !== action.payload.cityName
+        ),
       };
     }
 

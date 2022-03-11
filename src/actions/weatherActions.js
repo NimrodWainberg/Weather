@@ -12,6 +12,13 @@ export const addFavorite = (weather) => {
   };
 };
 
+export const removeFavorite = (weather) => {
+  return {
+    type: "REMOVE_FAVORITE",
+    payload: weather,
+  };
+};
+
 export const setCurrentWeatherData = (weatherData) => {
   return {
     type: "SET_CURRENT_WEATHER_DATA",

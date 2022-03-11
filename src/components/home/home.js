@@ -3,6 +3,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import DropDown from "../small_components/dropDown";
+import { FavoriteButton } from "../small_components/buttons";
 import {
   getAutoCompleteApi,
   getCitySearch,
@@ -13,6 +14,7 @@ import {
   setCurrentWeatherData,
   setCurrentWeatherName,
   addFavorite,
+  removeFavorite,
 } from "../../actions/weatherActions";
 import { useDispatch, useSelector } from "react-redux";
 
@@ -22,10 +24,27 @@ const Home = () => {
   const currentWeatherDetails = useSelector((state) =>
     JSON.stringify(state.weather)
   );
+  const favorites = useSelector((state) => state.favorites);
 
   console.log(`currentWeatherDetails: ${currentWeatherDetails}`);
+  console.log(
+    `currentWeatherDetails.currentWeatherData: ${currentWeatherDetails.currentWeatherData}`
+  );
+  console.log(
+    `currentWeatherText: ${currentWeatherDetails.currentWeatherData}`
+  );
 
   // const notify = () => toast("Wow so easy!");
+
+  const handleFavorite = (isFavorites) => {
+    if (isFavorites) {
+      dispatch(addFavorite(currentWeatherDetails));
+      console.log(`favorites: ${favorites}`);
+    } else {
+      dispatch(removeFavorite(currentWeatherDetails));
+      console.log(`favorites: ${favorites}`);
+    }
+  };
 
   const navigate = useNavigate();
 
@@ -144,6 +163,7 @@ const Home = () => {
     <div className="app">
       <h1>Home </h1>
       <DropDown />
+      <FavoriteButton onClick={handleFavorite} />
       <Link to="/favorites">Favorites</Link>
       <main>
         <div className="search-box">
@@ -156,12 +176,12 @@ const Home = () => {
           />
         </div>
         <div className="location-box">
-          <div className="location">Tel Aviv City</div>
+          <div className="location"> Tel Aviv City</div>
           <div className="date">{dateBuilder(new Date())}</div>
         </div>
         <div className="weather-box">
           <div className="temperature">
-            {currentWeatherDetails?.currentWeatherData.temperature}°c
+            {currentWeatherDetails.currentWeatherData}°C
           </div>
           <div className="weather">Sunny</div>
         </div>

@@ -21,18 +21,13 @@ import { useDispatch, useSelector } from "react-redux";
 const Home = () => {
   const [query, setQuery] = useState("");
   const dispatch = useDispatch();
-  const currentWeatherDetails = useSelector((state) =>
-    JSON.stringify(state.weather)
-  );
+  const currentWeatherDetails = useSelector((state) => state.weather);
   const favorites = useSelector((state) => state.favorites);
 
-  console.log(`currentWeatherDetails: ${currentWeatherDetails}`);
-  console.log(
-    `currentWeatherDetails.currentWeatherData: ${currentWeatherDetails.currentWeatherData}`
-  );
-  console.log(
-    `currentWeatherText: ${currentWeatherDetails.currentWeatherData}`
-  );
+  console.log(currentWeatherDetails);
+  const cityName = currentWeatherDetails.currentWeatherData.cityName;
+  const weatherText = currentWeatherDetails.currentWeatherData.weatherText;
+  const temperature = currentWeatherDetails.currentWeatherData.temperature;
 
   // const notify = () => toast("Wow so easy!");
 
@@ -67,19 +62,21 @@ const Home = () => {
     setQuery(`?apikey=${weatherApi.baseKey}&q=${city}`);
 
     try {
-      // const res = await fetch(weatherApi.cityIdWeatherSearchKey + query);
-      //  const data = await res.json();
-      const data = getCitySearch();
+      const res = await fetch(weatherApi.cityIdWeatherSearchKey + query);
+      const data = await res.json();
+      // const data = getCitySearch();
       console.log(`data:${JSON.stringify(data)}`);
       const cityName = data[0]?.LocalizedName;
       dispatch(setCurrentWeatherName(cityName));
       const cityId = data[0]?.Key;
       console.log(`: ${cityId}`);
 
-      setQuery(`${cityId}?apikey=${weatherApi.baseKey}`);
-      //const response = await fetch(weatherApi.currentWeatherKey + query);
-      // const cityData = await response.json();
-      const cityData = getCurrentCityWeather();
+      //etQuery(`${cityId}?apikey=${weatherApi.baseKey}`);
+      const apiRequest = `${cityId}?apikey=${weatherApi.baseKey}`;
+      console.log(`: ${query}`);
+      const response = await fetch(weatherApi.currentWeatherKey + apiRequest);
+      const cityData = await response.json();
+      // const cityData = getCurrentCityWeather();
       console.log(`cityData:${JSON.stringify(cityData)}`);
 
       return cityData;
@@ -118,11 +115,15 @@ const Home = () => {
 
   const search = async (event) => {
     if (event.key === "Enter") {
-      const currentWeatherDetails = await getWeatherDetails(event.target.value);
-      console.log(
-        `currentWeatherDetails: ${JSON.stringify(currentWeatherDetails)}`
+      const currentCityWeatherDetails = await getWeatherDetails(
+        event.target.value
       );
-      dispatch(setCurrentWeatherData(currentWeatherDetails));
+      console.log(currentCityWeatherDetails);
+      if (currentCityWeatherDetails) {
+        dispatch(setCurrentWeatherData(currentCityWeatherDetails));
+      } else {
+        toast.error({ toastId: "error" }, "auto complete failed");
+      }
     }
   };
 
@@ -176,14 +177,14 @@ const Home = () => {
           />
         </div>
         <div className="location-box">
-          <div className="location"> Tel Aviv City</div>
+          <div className="location">
+            {weatherText && cityName ? cityName : "Tel Aviv"} City
+          </div>
           <div className="date">{dateBuilder(new Date())}</div>
         </div>
         <div className="weather-box">
-          <div className="temperature">
-            {currentWeatherDetails.currentWeatherData}°C
-          </div>
-          <div className="weather">Sunny</div>
+          <div className="temperature">{temperature ? temperature : ""} °C</div>
+          <div className="weather"> {weatherText ? weatherText : ""}</div>
         </div>
         {/* <button onClick={notify}>Notify!</button> */}
         <ToastContainer />

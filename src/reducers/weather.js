@@ -9,8 +9,8 @@ const weatherRducer = (
         ...state,
         currentWeatherData: {
           ...state.currentWeatherData,
-          weatherText: action.payload.WeatherText,
-          temperature: action.payload.Temperature.Metric.Value,
+          weatherText: action?.payload?.WeatherText,
+          temperature: action?.payload?.Temperature.Metric.Value,
         },
       };
     }
@@ -20,7 +20,7 @@ const weatherRducer = (
         ...state,
         currentWeatherData: {
           ...state.currentWeatherData,
-          cityName: action.payload,
+          cityName: action?.payload,
         },
       };
     }

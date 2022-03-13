@@ -1,4 +1,5 @@
 import * as React from "react";
+import { useSelector } from "react-redux";
 import TextField from "@mui/material/TextField";
 import Autocomplete, { createFilterOptions } from "@mui/material/Autocomplete";
 
@@ -6,6 +7,13 @@ const filter = createFilterOptions();
 
 const DropDown = () => {
   const [value, setValue] = React.useState(null);
+  const options = useSelector((state) => state.autoComplete);
+  console.log(`options: ${JSON.stringify(options)}`);
+  // const autoCompleteOptions = options.map((element) => {
+  //   return {
+  //     title: element,
+  //   };
+  // });
 
   return (
     <Autocomplete
@@ -62,7 +70,7 @@ const DropDown = () => {
       sx={{ width: 300 }}
       freeSolo
       renderInput={(params) => (
-        <TextField {...params} label="Free solo with text demo" />
+        <TextField {...params} label="Please Enter a City" />
       )}
     />
   );

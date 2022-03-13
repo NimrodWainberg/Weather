@@ -73,7 +73,7 @@ const Home = () => {
 
       //etQuery(`${cityId}?apikey=${weatherApi.baseKey}`);
       const apiRequest = `${cityId}?apikey=${weatherApi.baseKey}`;
-      console.log(`: ${query}`);
+      console.log(`: ${apiRequest}`);
       const response = await fetch(weatherApi.currentWeatherKey + apiRequest);
       const cityData = await response.json();
       // const cityData = getCurrentCityWeather();
@@ -164,7 +164,6 @@ const Home = () => {
     <div className="app">
       <h1>Home </h1>
       <DropDown />
-      <FavoriteButton onClick={handleFavorite} />
       <Link to="/favorites">Favorites</Link>
       <main>
         <div className="search-box">
@@ -175,6 +174,7 @@ const Home = () => {
             onChange={handleChange}
             onKeyPress={search}
           />
+          <FavoriteButton onClick={handleFavorite} />
         </div>
         <div className="location-box">
           <div className="location">

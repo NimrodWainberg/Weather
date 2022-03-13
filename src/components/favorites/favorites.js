@@ -5,6 +5,7 @@ const Favorites = () => {
   return (
     <>
       <h1>Favorites</h1>
+      <div className="app"></div>
       <Link to="/">Home</Link>
     </>
   );

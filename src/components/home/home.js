@@ -4,6 +4,7 @@ import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import DropDown from "../small_components/dropDown";
 import { FavoriteButton } from "../small_components/buttons";
+import OutlinedCard from "../small_components/weatherCard";
 import {
   getAutoCompleteApi,
   getCitySearch,
@@ -71,12 +72,12 @@ const Home = () => {
       const cityId = data[0]?.Key;
       console.log(`: ${cityId}`);
 
-      //etQuery(`${cityId}?apikey=${weatherApi.baseKey}`);
+      //setQuery(`${cityId}?apikey=${weatherApi.baseKey}`);
       const apiRequest = `${cityId}?apikey=${weatherApi.baseKey}`;
       console.log(`: ${apiRequest}`);
-      const response = await fetch(weatherApi.currentWeatherKey + apiRequest);
-      const cityData = await response.json();
-      // const cityData = getCurrentCityWeather();
+      //const response = await fetch(weatherApi.currentWeatherKey + apiRequest);
+      //const cityData = await response.json();
+      const cityData = getCurrentCityWeather();
       console.log(`cityData:${JSON.stringify(cityData)}`);
 
       return cityData;
@@ -187,6 +188,9 @@ const Home = () => {
           <div className="weather"> {weatherText ? weatherText : ""}</div>
         </div>
         {/* <button onClick={notify}>Notify!</button> */}
+        <div className="weahterCat">
+          <OutlinedCard />
+        </div>
         <ToastContainer />
       </main>
     </div>

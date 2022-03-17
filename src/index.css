@@ -118,3 +118,7 @@ main {
   justify-content: space-between;
 }
 
+.weatherCard {
+   width: 10%;
+}
+

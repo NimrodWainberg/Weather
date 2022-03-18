@@ -9,6 +9,7 @@ import {
   getAutoCompleteApi,
   getCitySearch,
   getCurrentCityWeather,
+  getCurrentFiveDaysCityWeather,
 } from "../../mock/mock";
 import { addAutoCompleteOptions } from "../../actions/autoCompleteActions";
 import {
@@ -57,11 +58,12 @@ const Home = () => {
       "http://dataservice.accuweather.com/locations/v1/cities/search",
     currentWeatherKey:
       "https://dataservice.accuweather.com/currentconditions/v1/",
+    cityFiveDaysWeatherKey:
+      "http://dataservice.accuweather.com/forecasts/v1/daily/5day/",
   };
 
-  const getWeatherDetails = async (city) => {
+  const getCityId = async (city) => {
     setQuery(`?apikey=${weatherApi.baseKey}&q=${city}`);
-
     try {
       const res = await fetch(weatherApi.cityIdWeatherSearchKey + query);
       const data = await res.json();
@@ -72,15 +74,41 @@ const Home = () => {
       const cityId = data[0]?.Key;
       console.log(`: ${cityId}`);
 
+      return cityId;
+    } catch (err) {
+      toast.error({ toastId: "error" }, "could not find city");
+    }
+  };
+
+  const getWeatherDetails = async (cityId) => {
+    try {
       //setQuery(`${cityId}?apikey=${weatherApi.baseKey}`);
       const apiRequest = `${cityId}?apikey=${weatherApi.baseKey}`;
       console.log(`: ${apiRequest}`);
-      //const response = await fetch(weatherApi.currentWeatherKey + apiRequest);
-      //const cityData = await response.json();
-      const cityData = getCurrentCityWeather();
+      const response = await fetch(weatherApi.currentWeatherKey + apiRequest);
+      const cityData = await response.json();
+      //const cityData = getCurrentCityWeather();
       console.log(`cityData:${JSON.stringify(cityData)}`);
 
       return cityData;
+    } catch (err) {
+      toast.error({ toastId: "error" }, "could not find city");
+    }
+  };
+
+  const getFiveDaysWeather = async (cityId) => {
+    try {
+      //setQuery(`${cityId}?apikey=${weatherApi.baseKey}`);
+      const apiRequest = `${cityId}?apikey=${weatherApi.baseKey}`;
+      console.log(`: ${apiRequest}`);
+      const response = await fetch(
+        weatherApi.cityFiveDaysWeatherKey + apiRequest
+      );
+      //const cityFiveDaysData = await response.json();
+      const cityFiveDaysData = getCurrentFiveDaysCityWeather();
+      console.log(`cityData:${JSON.stringify(cityFiveDaysData)}`);
+
+      return cityFiveDaysData;
     } catch (err) {
       toast.error({ toastId: "error" }, "could not find city");
     }
@@ -116,10 +144,11 @@ const Home = () => {
 
   const search = async (event) => {
     if (event.key === "Enter") {
-      const currentCityWeatherDetails = await getWeatherDetails(
-        event.target.value
-      );
+      const cityId = await getCityId(event.target.value);
+      const currentCityWeatherDetails = await getWeatherDetails(cityId);
+      const currentCityFiveDaysWeather = await getFiveDaysWeather(cityId);
       console.log(currentCityWeatherDetails);
+      console.log(currentCityFiveDaysWeather);
       if (currentCityWeatherDetails) {
         dispatch(setCurrentWeatherData(currentCityWeatherDetails));
       } else {

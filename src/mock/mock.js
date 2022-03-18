@@ -248,3 +248,174 @@ export function getCurrentCityWeather() {
     },
   ];
 }
+
+export function getCurrentFiveDaysCityWeather() {
+  return {
+    Headline: {
+      EffectiveDate: "2022-03-18T13:00:00+02:00",
+      EffectiveEpochDate: 1647601200,
+      Severity: 5,
+      Text: "Expect showers Friday afternoon",
+      Category: "rain",
+      EndDate: "2022-03-18T19:00:00+02:00",
+      EndEpochDate: 1647622800,
+      MobileLink:
+        "http://www.accuweather.com/en/il/tel-aviv/215854/daily-weather-forecast/215854?lang=en-us",
+      Link: "http://www.accuweather.com/en/il/tel-aviv/215854/daily-weather-forecast/215854?lang=en-us",
+    },
+    DailyForecasts: [
+      {
+        Date: "2022-03-17T07:00:00+02:00",
+        EpochDate: 1647493200,
+        Temperature: {
+          Minimum: {
+            Value: 52,
+            Unit: "F",
+            UnitType: 18,
+          },
+          Maximum: {
+            Value: 61,
+            Unit: "F",
+            UnitType: 18,
+          },
+        },
+        Day: {
+          Icon: 2,
+          IconPhrase: "Mostly sunny",
+          HasPrecipitation: false,
+        },
+        Night: {
+          Icon: 8,
+          IconPhrase: "Dreary",
+          HasPrecipitation: false,
+        },
+        Sources: ["AccuWeather"],
+        MobileLink:
+          "http://www.accuweather.com/en/il/tel-aviv/215854/daily-weather-forecast/215854?day=1&lang=en-us",
+        Link: "http://www.accuweather.com/en/il/tel-aviv/215854/daily-weather-forecast/215854?day=1&lang=en-us",
+      },
+      {
+        Date: "2022-03-18T07:00:00+02:00",
+        EpochDate: 1647579600,
+        Temperature: {
+          Minimum: {
+            Value: 52,
+            Unit: "F",
+            UnitType: 18,
+          },
+          Maximum: {
+            Value: 60,
+            Unit: "F",
+            UnitType: 18,
+          },
+        },
+        Day: {
+          Icon: 12,
+          IconPhrase: "Showers",
+          HasPrecipitation: true,
+          PrecipitationType: "Rain",
+          PrecipitationIntensity: "Light",
+        },
+        Night: {
+          Icon: 36,
+          IconPhrase: "Intermittent clouds",
+          HasPrecipitation: false,
+        },
+        Sources: ["AccuWeather"],
+        MobileLink:
+          "http://www.accuweather.com/en/il/tel-aviv/215854/daily-weather-forecast/215854?day=2&lang=en-us",
+        Link: "http://www.accuweather.com/en/il/tel-aviv/215854/daily-weather-forecast/215854?day=2&lang=en-us",
+      },
+      {
+        Date: "2022-03-19T07:00:00+02:00",
+        EpochDate: 1647666000,
+        Temperature: {
+          Minimum: {
+            Value: 51,
+            Unit: "F",
+            UnitType: 18,
+          },
+          Maximum: {
+            Value: 63,
+            Unit: "F",
+            UnitType: 18,
+          },
+        },
+        Day: {
+          Icon: 4,
+          IconPhrase: "Intermittent clouds",
+          HasPrecipitation: false,
+        },
+        Night: {
+          Icon: 38,
+          IconPhrase: "Mostly cloudy",
+          HasPrecipitation: false,
+        },
+        Sources: ["AccuWeather"],
+        MobileLink:
+          "http://www.accuweather.com/en/il/tel-aviv/215854/daily-weather-forecast/215854?day=3&lang=en-us",
+        Link: "http://www.accuweather.com/en/il/tel-aviv/215854/daily-weather-forecast/215854?day=3&lang=en-us",
+      },
+      {
+        Date: "2022-03-20T07:00:00+02:00",
+        EpochDate: 1647752400,
+        Temperature: {
+          Minimum: {
+            Value: 53,
+            Unit: "F",
+            UnitType: 18,
+          },
+          Maximum: {
+            Value: 60,
+            Unit: "F",
+            UnitType: 18,
+          },
+        },
+        Day: {
+          Icon: 4,
+          IconPhrase: "Intermittent clouds",
+          HasPrecipitation: false,
+        },
+        Night: {
+          Icon: 38,
+          IconPhrase: "Mostly cloudy",
+          HasPrecipitation: false,
+        },
+        Sources: ["AccuWeather"],
+        MobileLink:
+          "http://www.accuweather.com/en/il/tel-aviv/215854/daily-weather-forecast/215854?day=4&lang=en-us",
+        Link: "http://www.accuweather.com/en/il/tel-aviv/215854/daily-weather-forecast/215854?day=4&lang=en-us",
+      },
+      {
+        Date: "2022-03-21T07:00:00+02:00",
+        EpochDate: 1647838800,
+        Temperature: {
+          Minimum: {
+            Value: 47,
+            Unit: "F",
+            UnitType: 18,
+          },
+          Maximum: {
+            Value: 61,
+            Unit: "F",
+            UnitType: 18,
+          },
+        },
+        Day: {
+          Icon: 4,
+          IconPhrase: "Intermittent clouds",
+          HasPrecipitation: false,
+        },
+        Night: {
+          Icon: 34,
+          IconPhrase: "Mostly clear",
+          HasPrecipitation: false,
+        },
+        Sources: ["AccuWeather"],
+        MobileLink:
+          "http://www.accuweather.com/en/il/tel-aviv/215854/daily-weather-forecast/215854?day=5&lang=en-us",
+        Link: "http://www.accuweather.com/en/il/tel-aviv/215854/daily-weather-forecast/215854?day=5&lang=en-us",
+      },
+    ],
+  };
+}

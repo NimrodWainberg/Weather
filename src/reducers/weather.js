@@ -38,6 +38,13 @@ const weatherRducer = (
       };
     }
 
+    case "SET_FIVE_DAYS_WEATHER": {
+      return {
+        ...state,
+        weathers: [],
+      };
+    }
+
     default:
       return state;
   }

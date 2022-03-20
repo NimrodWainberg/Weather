@@ -32,3 +32,10 @@ export const setCurrentWeatherName = (weatherName) => {
     payload: weatherName,
   };
 };
+
+export const setFiveDaysWeather = (FiveDaysWeather) => {
+  return {
+    type: "SET_FIVE_DAYS_WEATHER",
+    payload: FiveDaysWeather,
+  };
+};

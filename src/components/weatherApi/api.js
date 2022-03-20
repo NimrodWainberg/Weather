@@ -25,7 +25,7 @@ const getWeatherDetails = async (city) => {
     // const data = getCitySearch();
     console.log(`data:${JSON.stringify(data)}`);
     const cityName = data[0]?.LocalizedName;
-    dispatch(setCurrentWeatherName(cityName));
+    // dispatch(setCurrentWeatherName(cityName));
     const cityId = data[0]?.Key;
     console.log(`: ${cityId}`);
 

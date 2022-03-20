@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
@@ -32,6 +32,38 @@ const Home = () => {
   const temperature = currentWeatherDetails.currentWeatherData.temperature;
 
   // const notify = () => toast("Wow so easy!");
+
+  // useEffect(() => {
+  //   try {
+  //     (async function () {
+  //       const [currentCityWeatherDetails, currentCityFiveDaysWeather] =
+  //         handleWeatherData("Tel Aviv");
+  //     })();
+  //   } catch (err) {
+  //     console.error(err);
+  //   }
+  // }, []);
+
+  const handleWeatherData = async (cityName) => {
+    const cityId = await getCityId(cityName);
+    const currentCityWeatherDetails = await getWeatherDetails(cityId);
+    const currentCityFiveDaysWeather = await getFiveDaysWeather(cityId);
+
+    return [currentCityWeatherDetails, currentCityFiveDaysWeather];
+  };
+
+  const reduxCurrentWeatherUpdate = (cityData, fiveDaysData) => {
+    if (cityData) {
+      dispatch(setCurrentWeatherData(cityData));
+    } else {
+      toast.error({ toastId: "error" }, "auto complete failed");
+    }
+    if (fiveDaysData) {
+      dispatch(setCurrentWeatherData(fiveDaysData));
+    } else {
+      toast.error({ toastId: "error" }, "auto complete failed");
+    }
+  };
 
   const handleFavorite = (isFavorites) => {
     if (isFavorites) {
@@ -144,16 +176,19 @@ const Home = () => {
 
   const search = async (event) => {
     if (event.key === "Enter") {
-      const cityId = await getCityId(event.target.value);
-      const currentCityWeatherDetails = await getWeatherDetails(cityId);
-      const currentCityFiveDaysWeather = await getFiveDaysWeather(cityId);
+      const [currentCityWeatherDetails, currentCityFiveDaysWeather] =
+        await handleWeatherData(event.target.value);
       console.log(currentCityWeatherDetails);
       console.log(currentCityFiveDaysWeather);
-      if (currentCityWeatherDetails) {
-        dispatch(setCurrentWeatherData(currentCityWeatherDetails));
-      } else {
-        toast.error({ toastId: "error" }, "auto complete failed");
-      }
+      // currentCityFiveDaysWeather = [
+      //   ...currentCityFiveDaysWeather.Headline,
+      //   ...currentCityFiveDaysWeather.DailyForecasts,
+      // ];
+
+      reduxCurrentWeatherUpdate(
+        currentCityWeatherDetails,
+        currentCityFiveDaysWeather
+      );
     }
   };
 
